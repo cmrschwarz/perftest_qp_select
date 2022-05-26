@@ -423,6 +423,11 @@ static void usage(const char *argv0, VerbType verb, TestType tst, int connection
 	/*Long flags*/
 	putchar('\n');
 
+	#ifdef HAVE_IBV_WR_API
+		printf("      --source_qpn ");
+		printf(" Source Queue Pair Number for the infiniband connection. By default 0, meaning chosen by the driver.\n");
+	#endif
+
 	printf("      --out_json ");
 	printf(" Save the report in a json file\n");
 
@@ -2147,6 +2152,7 @@ int parser(struct perftest_parameters *user_param,char *argv[], int argc)
 	static int vlan_en = 0;
 	static int vlan_pcp_flag = 0;
 	static int recv_post_list_flag = 0;
+    static int source_qpn_flag = 0;
 	#ifdef HAVE_DCS
 	static int log_dci_streams_flag = 0;
 	static int log_active_dci_streams_flag = 0;
@@ -2311,6 +2317,7 @@ int parser(struct perftest_parameters *user_param,char *argv[], int argc)
 			{.name = "use_ooo", .has_arg = 0, .flag = &use_ooo_flag, .val = 1},
 			#endif
 			{.name = "source_ip", .has_arg = 1, .flag = &source_ip_flag, .val = 1},
+            {.name = "source_qpn", .has_arg = 1, .flag = &source_qpn_flag, .val = 0},
 			{0}
 		};
 		c = getopt_long(argc,argv,"w:y:p:d:i:m:s:n:t:u:S:x:c:q:I:o:M:r:Q:A:l:D:f:B:T:L:E:J:j:K:k:X:W:aFegzRvhbNVCHUOZP",long_options,NULL);
@@ -2765,6 +2772,10 @@ int parser(struct perftest_parameters *user_param,char *argv[], int argc)
 					CHECK_VALUE(user_param->recv_post_list,int,"Receive Post List size",not_int_ptr);
 					recv_post_list_flag = 0;
 				}
+                if(source_qpn_flag){
+                    CHECK_VALUE(user_param->source_qpn,int, "Source Queue Pair Number",not_int_ptr);
+                    source_qpn_flag = 0;
+                }
 				#ifdef HAVE_AES_XTS
 				if (aes_xts_flag) {
 					user_param->aes_xts = 1;

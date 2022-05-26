@@ -601,6 +601,7 @@ struct perftest_parameters {
 	struct counter_context		*counter_ctx;
 	char				*source_ip;
 	int 				has_source_ip;
+	uint32_t        		source_qpn;
 };
 
 struct report_options {
