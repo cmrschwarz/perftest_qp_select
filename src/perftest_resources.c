@@ -2251,6 +2251,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		#ifdef HAVE_SRD
 		#ifdef HAVE_IBV_WR_API
 		efa_attr.driver_qp_type = EFADV_QP_DRIVER_TYPE_SRD;
+		puts("calling efadv_create_qp_ex");
 		qp = efadv_create_qp_ex(ctx->context, &attr_ex,
 					&efa_attr, sizeof(efa_attr));
 		#else
@@ -2287,6 +2288,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 					}
 					#endif
 				}
+				puts("calling mlx5dv_create_qp");
 				qp = mlx5dv_create_qp(ctx->context, &attr_ex, &attr_dv);
 			}
 			#ifdef HAVE_AES_XTS
@@ -2296,15 +2298,18 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 				attr_dv.comp_mask = MLX5DV_QP_INIT_ATTR_MASK_SEND_OPS_FLAGS;
 				attr_dv.send_ops_flags = MLX5DV_QP_EX_WITH_MKEY_CONFIGURE;
 				attr_dv.create_flags = MLX5DV_QP_CREATE_DISABLE_SCATTER_TO_CQE;
+				puts("calling mlx5dv_create_qp");
 				qp = mlx5dv_create_qp(ctx->context, &attr_ex, &attr_dv);
 			}
 			#endif // HAVE_AES_XTS
 			else
 			#endif // HAVE_MLX5DV
+			puts("calling ibv_create_qp_ex");
 				qp = ibv_create_qp_ex(ctx->context, &attr_ex);
 		}
 		else
 		#endif // HAVE_IBV_WR_API
+		puts("calling ibv_create_qp");
 			qp = ibv_create_qp(ctx->pd, &attr);
 	}
 
