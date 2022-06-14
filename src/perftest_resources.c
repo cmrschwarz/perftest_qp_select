@@ -2216,6 +2216,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 	attr_ex.cap.max_recv_wr  = attr.cap.max_recv_wr;
 	attr_ex.cap.max_recv_sge = attr.cap.max_recv_sge;
     if (user_param->source_qpn) {
+		printf("overwriting source qpn: %i\n", user_param->source_qpn);
         attr_ex.create_flags |= IBV_QP_CREATE_SOURCE_QPN;
         attr_ex.source_qpn = user_param->source_qpn;
     }

@@ -424,7 +424,7 @@ static void usage(const char *argv0, VerbType verb, TestType tst, int connection
 	putchar('\n');
 
 	#ifdef HAVE_IBV_WR_API
-		printf("      --source_qpn ");
+		printf("      --source_qpn=<qp number>");
 		printf(" Source Queue Pair Number for the infiniband connection. By default 0, meaning chosen by the driver.\n");
 	#endif
 
@@ -2317,7 +2317,7 @@ int parser(struct perftest_parameters *user_param,char *argv[], int argc)
 			{.name = "use_ooo", .has_arg = 0, .flag = &use_ooo_flag, .val = 1},
 			#endif
 			{.name = "source_ip", .has_arg = 1, .flag = &source_ip_flag, .val = 1},
-            {.name = "source_qpn", .has_arg = 1, .flag = &source_qpn_flag, .val = 0},
+            {.name = "source_qpn", .has_arg = 1, .flag = &source_qpn_flag, .val = 1},
 			{0}
 		};
 		c = getopt_long(argc,argv,"w:y:p:d:i:m:s:n:t:u:S:x:c:q:I:o:M:r:Q:A:l:D:f:B:T:L:E:J:j:K:k:X:W:aFegzRvhbNVCHUOZP",long_options,NULL);
