@@ -2226,6 +2226,7 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		#ifdef HAVE_IBV_WR_API
 		if (!user_param->use_old_post_send)
 		{
+			puts("calling rdma_create_qp_ex");
 			if (rdma_create_qp_ex(ctx->cm_id, &attr_ex))
 			{
 				fprintf(stderr, "Couldn't create rdma new QP - %s\n", strerror(errno));
