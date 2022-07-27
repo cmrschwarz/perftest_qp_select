@@ -2309,8 +2309,10 @@ struct ibv_qp* ctx_qp_create(struct pingpong_context *ctx,
 		}
 		else
 		#endif // HAVE_IBV_WR_API
-		puts("calling ibv_create_qp");
+		{
+			puts("calling ibv_create_qp");
 			qp = ibv_create_qp(ctx->pd, &attr);
+		}
 	}
 
 	if (qp == NULL && errno == ENOMEM) {
